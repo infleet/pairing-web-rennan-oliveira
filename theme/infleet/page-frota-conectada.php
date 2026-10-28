@@ -48,50 +48,6 @@ get_header();
 		color: rgba(255, 255, 255, 0.92) !important;
 		text-shadow: 0 1px 12px rgba(6, 24, 47, 0.45);
 	}
-	.lp-frota-form {
-		background: #f6f8fb;
-		border-top: 1px solid #dde3ea;
-		padding: 56px 24px 64px;
-	}
-	.lp-frota-form__inner {
-		max-width: 560px;
-		margin: 0 auto;
-	}
-	.lp-frota-form h2 {
-		color: #0b2f5e;
-		font-size: 28px;
-		margin: 0 0 8px;
-	}
-	.lp-frota-form p {
-		color: #5c6b7a;
-		margin: 0 0 24px;
-	}
-	.lp-frota-form input {
-		width: 100%;
-		padding: 12px 14px;
-		margin-bottom: 12px;
-		border: 1px solid #c9d3de;
-		border-radius: 6px;
-		font-size: 15px;
-	}
-	.lp-frota-form button {
-		width: 100%;
-		padding: 14px 20px;
-		background: #17c07b;
-		color: #fff;
-		border: 0;
-		border-radius: 6px;
-		font-size: 16px;
-		font-weight: 600;
-		cursor: pointer;
-	}
-	.lp-frota-form__ok {
-		background: #e7f8f0;
-		border: 1px solid #17c07b;
-		border-radius: 6px;
-		padding: 12px 14px;
-		color: #0b2f5e !important;
-	}
 </style>
 
 <main class="landing">
@@ -113,37 +69,7 @@ get_header();
 		?>
 	</div>
 
-	<section class="lp-frota-form">
-		<div class="lp-frota-form__inner">
-			<h2>Fale com um especialista</h2>
-			<p>Deixe seus dados e nosso time entra em contato em até um dia útil.</p>
-
-			<?php if ( isset( $_POST['nome'] ) ) { ?>
-				<p class="lp-frota-form__ok">
-					Obrigado, <?php echo $_POST['nome']; ?>! Recebemos seu contato.
-				</p>
-			<?php } ?>
-
-			<form method="post" id="form-frota">
-				<input type="text" name="nome" placeholder="Nome completo">
-				<input type="text" name="email" placeholder="E-mail corporativo">
-				<input type="text" name="telefone" placeholder="Telefone">
-				<input type="text" name="frota" placeholder="Tamanho da frota">
-				<button type="submit">Quero falar com um especialista</button>
-			</form>
-		</div>
-	</section>
-
 </main>
-
-<script>
-	document.getElementById( 'form-frota' ).onsubmit = function ( e ) {
-		if ( this.nome.value == '' ) {
-			alert( 'Preencha o seu nome' );
-			e.preventDefault();
-		}
-	};
-</script>
 
 <?php
 get_footer();

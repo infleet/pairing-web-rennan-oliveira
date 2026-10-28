@@ -45,3 +45,53 @@ function infleet_register_lead_post_type() {
 	);
 }
 add_action( 'init', 'infleet_register_lead_post_type' );
+
+/**
+ * Colunas úteis na listagem de Leads no admin.
+ *
+ * @param string[] $columns Colunas padrão.
+ * @return string[]
+ */
+function infleet_lead_admin_columns( $columns ) {
+	$new = array();
+	foreach ( $columns as $key => $label ) {
+		$new[ $key ] = $label;
+		if ( 'title' === $key ) {
+			$new['lead_email'] = 'E-mail';
+			$new['lead_form']  = 'Formulário';
+		}
+	}
+	return $new;
+}
+add_filter( 'manage_lead_posts_columns', 'infleet_lead_admin_columns' );
+
+/**
+ * @param string $column  Nome da coluna.
+ * @param int    $post_id ID do Lead.
+ */
+function infleet_lead_admin_column_content( $column, $post_id ) {
+	if ( 'lead_email' === $column ) {
+		$email = get_post_meta( $post_id, 'email', true );
+		echo esc_html( is_string( $email ) ? $email : '' );
+		return;
+	}
+
+	if ( 'lead_form' === $column ) {
+		$form_id = (int) get_post_meta( $post_id, 'form_id', true );
+		if ( $form_id <= 0 ) {
+			echo '—';
+			return;
+		}
+		$title = get_the_title( $form_id );
+		if ( current_user_can( 'edit_post', $form_id ) ) {
+			printf(
+				'<a href="%s">%s</a>',
+				esc_url( get_edit_post_link( $form_id, 'raw' ) ),
+				esc_html( $title ? $title : '(sem título)' )
+			);
+		} else {
+			echo esc_html( $title ? $title : '(sem título)' );
+		}
+	}
+}
+add_action( 'manage_lead_posts_custom_column', 'infleet_lead_admin_column_content', 10, 2 );
